@@ -7,15 +7,15 @@
     explain it to yourself. """
 import asyncio
 import time
-async_comprehension = __import__('1-async_comprehension').async_comprehension
+wait_n = __import__('1-concurrent_coroutines').wait_n
 
 
-async def measure_runtime() -> float:
-    """ Run time for four parallel comprehensions """
-    tasks = []
-    start_time = time.time()
-    for i in range(4):
-        tasks.append(asyncio.create_task(async_comprehension()))
-    await asyncio.gather(*tasks)
-    end_time = time.time()
-    return end_time - start_time
+def measure_time(n: int, max_delay: int) -> float:
+    """
+    function that measures the total execution time for wait_n(n, max_delay)
+    and returns total_time / n
+    """
+    start = time.time()
+    asyncio.run(wait_n(n, max_delay))
+    end = time.time()
+    return (end - start) / n
